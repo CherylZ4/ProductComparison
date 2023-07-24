@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: product-comparison-deployment
+  labels:
+    app: product-comparison
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: product-comparison
+  template:
+    metadata:
+      labels:
+        app: product-comparison
+    spec:
+      containers:
+        - name: product-comparison
+          image: cherylzhang/productcomparison
+          ports:
+            - containerPort: 8080
