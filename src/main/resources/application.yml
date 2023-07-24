@@ -1,7 +1,7 @@
 #openai.api.key: ${open_api_key}
 openai:
   api:
-    key: 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
+    key:
 management.endpoints.web.exposure.include : health
 
 logging:
