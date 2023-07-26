@@ -1,7 +1,6 @@
 package com.example.ProductComparison.api.controller;
 
 import com.example.ProductComparison.api.model.IngredientResponse;
-import com.example.ProductComparison.api.model.IngredientsResponse;
 import com.example.ProductComparison.api.model.Products;
 import com.example.ProductComparison.service.DataProcessingService;
 import com.example.ProductComparison.service.InputService;

@@ -19,25 +19,9 @@ import org.springframework.boot.web.client.RestTemplateBuilder;
 public class InputService {
     private String endpointUrl = "https://api.openai.com/v1/completions";
 
-//      private RestTemplate restTemplate;
     @Value("${openai.api.key}")
     private String apiKey;
 
-    //
-//    @Bean
-//    public RestTemplate restTemplate(RestTemplateBuilder builder) {
-//        return builder.build();
-//
-//    }
-
-
-//    @Autowired
-//    private SecretClient secretClient;
-
-//    public String getPasswordFromKeyVault() {
-//        KeyVaultSecret secret = secretClient.getSecret("open-api-key");
-//        return secret.getValue();
-//    }
     public IngredientResponse getIngredients(String productName) {
         try {
 
@@ -63,9 +47,7 @@ public class InputService {
             HttpEntity<String> requestEntity = new HttpEntity<>(requestBody, headers);
 
             ResponseEntity<IngredientResponse> responseEntity = restTemplate.postForEntity(endpointUrl, requestEntity, IngredientResponse.class);
-//        ResponseEntity<IngredientResponse> responseEntity = restTemplate.postForEntity(endpointUrl,
-//                new HttpEntity<>(request, headers), IngredientResponse.class);
-//
+
 
             String[] words = responseEntity.getBody().getChoices().get(0).getText().split(",");
 

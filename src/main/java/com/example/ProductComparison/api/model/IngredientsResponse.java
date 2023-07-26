@@ -25,9 +25,6 @@ public class IngredientsResponse {
     }
 
 
-
-
-
     public List<String> getProduct_one_ingr() {
         return product_one_ingr;
     }
