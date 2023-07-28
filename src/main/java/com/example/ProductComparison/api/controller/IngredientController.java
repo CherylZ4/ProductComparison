@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -33,17 +32,14 @@ public class IngredientController {
         IngredientsResponse ingredientsResponse = new IngredientsResponse();
 
         if (products.getProduct_one().isEmpty() && products.getProduct_two().isEmpty()){
-            RuntimeException e  = new RuntimeException("both products are empty");
-            throw e;
+            throw new RuntimeException("both products are empty");
         }
 
         if (products.getProduct_one().isEmpty()){
-            RuntimeException e  = new RuntimeException("product 1 is empty");
-            throw e;
+            throw new RuntimeException("product 1 is empty");
         }
         if (products.getProduct_two().isEmpty()){
-            RuntimeException e  = new RuntimeException("product 2 is empty");
-            throw e;
+            throw new RuntimeException("product 2 is empty");
         }
 
         List<String> list1 = retrieveIngr(products.getProduct_one());
@@ -67,14 +63,15 @@ public class IngredientController {
      * retrieves the ingredients string array of the product by calling chatgpt using inputService
      * it returns a string list of the ingredients sorted
      *
-     * @param productName
+     *
      */
     public List<String> retrieveIngr(String productName) {
         IngredientResponse rs1 = inputService.getIngredients(productName);
-        String[] ing1 = rs1.getChoices().get(0).getText().replaceAll("\n", "").split(",");
+        String[] ing1 = rs1.getChoices().get(0).getText().replace("\n", "").split(",");
         Arrays.sort(ing1);
-        List<String> list1 = new ArrayList<String>(Arrays.asList(ing1));
-        return list1;
+        //List<String> list1 = new ArrayList<>(Arrays.asList(ing1));
+        return Arrays.asList(ing1);
+        //return list1;
     }
 
 }
