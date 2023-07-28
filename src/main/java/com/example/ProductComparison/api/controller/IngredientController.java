@@ -1,6 +1,7 @@
 package com.example.ProductComparison.api.controller;
 
 import com.example.ProductComparison.api.model.IngredientResponse;
+import com.example.ProductComparison.api.model.IngredientsResponse;
 import com.example.ProductComparison.api.model.Products;
 import com.example.ProductComparison.service.DataProcessingService;
 import com.example.ProductComparison.service.InputService;
@@ -68,7 +69,7 @@ public class IngredientController {
      *
      * @param productName
      */
-    private List<String> retrieveIngr(String productName) {
+    public List<String> retrieveIngr(String productName) {
         IngredientResponse rs1 = inputService.getIngredients(productName);
         String[] ing1 = rs1.getChoices().get(0).getText().replaceAll("\n", "").split(",");
         Arrays.sort(ing1);

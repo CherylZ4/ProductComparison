@@ -1,0 +1,19 @@
+{
+  "id": "cmpl-7gxN6Yci6oxkgSBMW1mbsQgBmfMDd",
+  "object": "text_completion",
+  "created": 1690472356,
+  "model": "text-davinci-001",
+  "choices": [
+    {
+      "text": "all-purpose flour,hot water",
+      "index": 0,
+      "logprobs": null,
+      "finish_reason": "length"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 3,
+    "completion_tokens": 7,
+    "total_tokens": 10
+  }
+}

@@ -3,24 +3,26 @@ package com.example.ProductComparison.service;
 
 import com.example.ProductComparison.api.model.IngredientRequest;
 import com.example.ProductComparison.api.model.IngredientResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.boot.web.client.RestTemplateBuilder;
 
 
 @Service
 public class InputService {
     private String endpointUrl = "https://api.openai.com/v1/completions";
 
+    private RestTemplate restTemplate;
     @Value("${openai.api.key}")
     private String apiKey;
+
+    public InputService(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
 
     public IngredientResponse getIngredients(String productName) {
         try {
@@ -35,8 +37,6 @@ public class InputService {
             request.setMax_tokens(7);
             request.setTemperature(0);
 
-
-            RestTemplate restTemplate = new RestTemplate();
             String prompt = "list ingredients of " + productName;
             String requestBody = "{\"prompt\": \"" + prompt + "\"," +
                     " \"max_tokens\": 100, " +
@@ -48,17 +48,10 @@ public class InputService {
 
             ResponseEntity<IngredientResponse> responseEntity = restTemplate.postForEntity(endpointUrl, requestEntity, IngredientResponse.class);
 
-
-            String[] words = responseEntity.getBody().getChoices().get(0).getText().split(",");
-
-            for (String word : words) {
-                System.out.println(word);
-            }
             return responseEntity.getBody();
         } catch (Exception e) {
             e.printStackTrace();
-          throw e;
+            throw e;
         }
-
     }
 }

@@ -1,0 +1,21 @@
+{
+  "percSil": 33.0,
+  "product_one_ingr": [
+    " all-purpose flour",
+    " hot water",
+    " salt",
+    " unsweetened cocoa powder",
+    "unsalted butter"
+  ],
+  "product_two_ingr": [
+    " butter",
+    " milk",
+    "flour"
+  ],
+  "ingr_common": [
+    " baking powder",
+    " eggs",
+    " sugar",
+    " vanilla extract"
+  ]
+}

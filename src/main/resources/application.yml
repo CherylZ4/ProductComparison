@@ -1,9 +1,10 @@
-#openai.api.key: ${open_api_key}
-openai:
-  api:
-    key:
+openai.api.key: ${open_api_key}
+#openai:
+#  api:
+#    key: open_api_key
 management.endpoints.web.exposure.include : health
 
 logging:
   level:
-    root: DEBUG
+    root: INFO
+    //root: DEBUG
