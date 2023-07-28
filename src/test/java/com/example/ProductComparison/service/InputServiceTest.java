@@ -48,12 +48,11 @@ class InputServiceTest {
         )).thenReturn(resultEntity);
 
         IngredientResponse rs = inputService.getIngredients("vanilla cake");
-        //TODO: Add assert for response id equal to  "cmpl-7gxN6Yci6oxkgSBMW1mbsQgBmfMDd"
         assertEquals("cmpl-7gxN6Yci6oxkgSBMW1mbsQgBmfMDd",rs.getId());
 
     }
 
-    //TODO: add a test method for exception case
+
     @Test
     void test_getIngredients_whenRestCallFails(){
         Mockito.when(restTemplate.postForEntity(anyString(), any(), eq(IngredientResponse.class)))
