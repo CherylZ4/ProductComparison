@@ -16,16 +16,12 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.RestTemplate;
-
 import java.io.File;
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Collections;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.when;
+
 
 @ExtendWith(MockitoExtension.class)
 class IngredientControllerTest {

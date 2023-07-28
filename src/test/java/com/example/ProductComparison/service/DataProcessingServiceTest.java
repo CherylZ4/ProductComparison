@@ -1,10 +1,7 @@
 package com.example.ProductComparison.service;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-import com.example.ProductComparison.service.DataProcessingService;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
+
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,9 +9,9 @@ import java.util.Collections;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-//@SpringBootTest(classes = DataProcessingTests.class)
+
 public class DataProcessingServiceTest {
-   // @InjectMocks
+
     DataProcessingService dataProcessingService;
 
     @BeforeEach
