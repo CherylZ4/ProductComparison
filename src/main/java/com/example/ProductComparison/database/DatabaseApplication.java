@@ -6,6 +6,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.util.Optional;
+
 
 public class DatabaseApplication {
     private static final Logger log = LoggerFactory.getLogger(DatabaseApplication.class);
@@ -29,7 +31,7 @@ public class DatabaseApplication {
             log.info("");
 
             // fetch an individual customer by ID
-            User user = repository.findById(1);
+            Optional<User> user = repository.findById(1);
             log.info("Customer found with findById(1):");
             log.info("--------------------------------");
             log.info(user.toString());

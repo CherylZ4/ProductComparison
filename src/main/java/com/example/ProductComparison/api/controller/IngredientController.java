@@ -3,8 +3,10 @@ package com.example.ProductComparison.api.controller;
 import com.example.ProductComparison.api.model.IngredientResponse;
 import com.example.ProductComparison.api.model.IngredientsResponse;
 import com.example.ProductComparison.api.model.Products;
+import com.example.ProductComparison.database.User;
 import com.example.ProductComparison.service.DataProcessingService;
 import com.example.ProductComparison.service.InputService;
+import com.example.ProductComparison.service.UserRepositoryImpl;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -22,9 +24,13 @@ public class IngredientController {
     private InputService inputService;
     private DataProcessingService dataProcessingService;
 
-    public IngredientController(InputService inputService, DataProcessingService dataProcessingService) {
+    private UserRepositoryImpl userRepository;
+
+    private int idCounter = 1;
+    public IngredientController(InputService inputService, DataProcessingService dataProcessingService,UserRepositoryImpl userRepository ) {
         this.inputService = inputService;
         this.dataProcessingService = dataProcessingService;
+        this.userRepository = userRepository;
     }
 
     @PostMapping(value = "/ingredients", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -54,6 +60,10 @@ public class IngredientController {
         list2.removeAll(common);
         ingredientsResponse.setProduct_two_ingr(list2);
 
+        User user = new User(idCounter++,ingredientsResponse.getPercSil(), products.getProduct_one(),products.getProduct_two(),  String.join(",", common),String.join(",", list1), String.join(",", list2));
+
+        userRepository.save(user);
+
 
         return ResponseEntity.ok(ingredientsResponse);
 
@@ -69,9 +79,7 @@ public class IngredientController {
         IngredientResponse rs1 = inputService.getIngredients(productName);
         String[] ing1 = rs1.getChoices().get(0).getText().replace("\n", "").split(",");
         Arrays.sort(ing1);
-        //List<String> list1 = new ArrayList<>(Arrays.asList(ing1));
         return Arrays.asList(ing1);
-        //return list1;
     }
 
 }
