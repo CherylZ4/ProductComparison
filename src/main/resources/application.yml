@@ -1,24 +1,20 @@
-openai.api.key: ${open_api_key}
-#openai:
-#  api:
-#    key: open_api_key
+#openai.api.key: ${open_api_key}
+openai:
+  api:
+   key: ${open_api_key}
 management.endpoints.web.exposure.include : health
 
 logging:
   level:
     root: INFO
-    #root: DEBUG
+ #   root: DEBUG
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/userDB
+    url: jdbc:postgresql://localhost:3000/postgres
     username: postgres
     password: Cherryz1!
-    driver-class-name: org.postgresql.Driver
-    initialization-mode: always
-    initialize: true
-    schema: classpath:/schema.sql
-    continue-on-error: true
+    driverClassName: org.postgresql.Driver
 
   jpa:
     properties:

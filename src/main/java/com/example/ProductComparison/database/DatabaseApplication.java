@@ -20,18 +20,18 @@ public class DatabaseApplication {
     public CommandLineRunner demo(UserRepository repository) {
         return (args) -> {
             // save a few customers
-            repository.save(new User(1,50.0, "vanilla cake", "chocolate cake", "flour", "vanilla", "chocolate"));
+            repository.save(new ProductHistory(1,50.0, "vanilla cake", "chocolate cake", "flour", "vanilla", "chocolate"));
 
             // fetch all customers
             log.info("Customers found with findAll():");
             log.info("-------------------------------");
-            for (User user : repository.findAll()) {
-                log.info(user.toString());
+            for (ProductHistory productHistory : repository.findAll()) {
+                log.info(productHistory.toString());
             }
             log.info("");
 
             // fetch an individual customer by ID
-            Optional<User> user = repository.findById(1);
+            Optional<ProductHistory> user = repository.findById(1);
             log.info("Customer found with findById(1):");
             log.info("--------------------------------");
             log.info(user.toString());

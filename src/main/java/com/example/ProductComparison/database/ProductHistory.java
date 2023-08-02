@@ -6,7 +6,7 @@ import jakarta.persistence.Id;
 
 
 @Entity // This tells Hibernate to make a table out of this class
-public class User {
+public class ProductHistory {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -25,7 +25,7 @@ public class User {
     private String p2ingr;
 
 
-    public User(int id, double percSil, String product1,  String product2, String ingrCommon, String p1ingr, String p2ingr ) {
+    public ProductHistory(int id, double percSil, String product1, String product2, String ingrCommon, String p1ingr, String p2ingr ) {
         this.id = id;
         this.percSil = percSil;
         this.product1 = product1;
@@ -33,6 +33,9 @@ public class User {
         this.ingrCommon = ingrCommon;
         this.p1ingr = p1ingr;
         this.p2ingr = p2ingr;
+    }
+
+    public ProductHistory() {
     }
 
 
