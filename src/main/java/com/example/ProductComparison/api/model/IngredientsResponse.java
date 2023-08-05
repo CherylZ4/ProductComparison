@@ -16,6 +16,8 @@ public class IngredientsResponse {
     private List<String> product_two_ingr;
     private List<String> ingr_common;
 
+
+
     public List<String> getIngr_common() {
         return ingr_common;
     }

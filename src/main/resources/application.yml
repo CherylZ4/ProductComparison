@@ -6,8 +6,8 @@ management.endpoints.web.exposure.include: health
 
 logging:
   level:
-    root: INFO
-  #  root: DEBUG
+    #root: INFO
+    root: DEBUG
 
 spring:
   datasource:

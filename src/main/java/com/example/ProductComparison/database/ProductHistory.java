@@ -10,6 +10,9 @@ public class ProductHistory {
     @GeneratedValue(strategy=GenerationType.AUTO)
 
     private Long id;
+
+    @Column(name = "user_email", nullable = false)
+    private String userEmail;
     private Double percsil;
 
     private String product1;
@@ -23,10 +26,16 @@ public class ProductHistory {
     private String p2ingr;
 
 
-    public ProductHistory(Long id, Double percsil, String product1, String product2, String ingr_common,
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public ProductHistory(String userEmail, Double percsil, String product1, String product2,
+                          String ingr_common,
                           String p1ingr,
                           String p2ingr ) {
-        this.id = id;
+
+        this.userEmail = userEmail;
         this.percsil = percsil;
         this.product1 = product1;
         this.product2 = product2;
@@ -68,9 +77,7 @@ public class ProductHistory {
     }
 
 
-    public Long getId() {
-        return id;
-    }
+
 
 
 }

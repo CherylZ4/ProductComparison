@@ -1,22 +1,20 @@
 package com.example.ProductComparison.api.controller;
 
-import com.example.ProductComparison.api.model.IngredientResponse;
-import com.example.ProductComparison.api.model.IngredientsResponse;
-import com.example.ProductComparison.api.model.Products;
+import com.example.ProductComparison.api.model.*;
 import com.example.ProductComparison.database.ProductHistory;
 import com.example.ProductComparison.database.UserRepository;
 import com.example.ProductComparison.service.DataProcessingService;
 import com.example.ProductComparison.service.InputService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.hibernate.annotations.Parameter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 @RestController
@@ -27,7 +25,7 @@ public class IngredientController {
 
     private UserRepository userRepository;
 
-    private Long idCounter = 1L;
+
 
     public IngredientController(InputService inputService, DataProcessingService dataProcessingService, UserRepository userRepository) {
         this.inputService = inputService;
@@ -56,14 +54,16 @@ public class IngredientController {
         List<String> common = dataProcessingService.getIngredientsInCommon(list1, list2);
 
 
+
         ingredientsResponse.setIngr_common(common);
         list1.removeAll(common);
         ingredientsResponse.setProduct_one_ingr(list1);
         list2.removeAll(common);
         ingredientsResponse.setProduct_two_ingr(list2);
 
+        String user_email = products.getUser_email();
         try {
-            ProductHistory productHistory = new ProductHistory(idCounter++, ingredientsResponse.getPercSil(),
+            ProductHistory productHistory = new ProductHistory(user_email, ingredientsResponse.getPercSil(),
                     products.getProduct_one(), products.getProduct_two(), String.join(",", common),
                     String.join(",", list1), String.join(",", list2));
             //ProductHistory productHistory = new ProductHistory(Long.valueOf(1), Double.valueOf(50.0), "vanilla",
@@ -73,7 +73,8 @@ public class IngredientController {
             return ResponseEntity.ok(ingredientsResponse);
 
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
 
@@ -87,7 +88,39 @@ public class IngredientController {
         IngredientResponse rs1 = inputService.getIngredients(productName);
         String[] ing1 = rs1.getChoices().get(0).getText().replace("\n", "").split(",");
         Arrays.sort(ing1);
-        return Arrays.asList(ing1);
+        ArrayList<String> result = new ArrayList<>(Arrays.asList(ing1));
+        return result;
     }
+
+
+    @PostMapping(value = "/history", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<HistoryResponse> getHistory(@RequestBody EmailQuery emailQuery) {
+        try {
+            HistoryResponse historyResponse = new HistoryResponse();
+
+            List<ProductHistory> historyList = userRepository.findAllByuserEmailEquals(emailQuery.getUserEmail());
+            List<ProductRecord> productRecords = new ArrayList<>();
+
+            Iterator<ProductHistory> iterator = historyList.iterator();
+
+            while (iterator.hasNext()) {
+                ProductHistory productHistory = iterator.next();
+                ProductRecord productRecord = new ProductRecord(productHistory.getPercSil(), productHistory.getProduct1()
+                        , productHistory.getProduct2(), productHistory.getP1ingr(), productHistory.getP2ingr(),
+                        productHistory.getIngrCommon());
+                productRecords.add(productRecord);
+
+            }
+
+            historyResponse.setProductRecords(productRecords);
+            return ResponseEntity.ok(historyResponse);
+        }catch(Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+
 
 }
