@@ -1,20 +1,20 @@
 #openai.api.key: ${open_api_key}
 openai:
   api:
-   key: ${open_api_key}
-management.endpoints.web.exposure.include : health
+    key: ${open_api_key}
+management.endpoints.web.exposure.include: health
 
 logging:
   level:
     root: INFO
- #   root: DEBUG
+  #  root: DEBUG
 
 spring:
   datasource:
     url: jdbc:postgresql://localhost:3000/postgres
     username: postgres
     password: Cherryz1!
-    driverClassName: org.postgresql.Driver
+    driver-class-name: org.postgresql.Driver
 
   jpa:
     properties:
@@ -25,4 +25,4 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         show_sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: none

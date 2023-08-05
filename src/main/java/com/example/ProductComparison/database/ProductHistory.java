@@ -1,36 +1,36 @@
 package com.example.ProductComparison.database;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 
 @Entity // This tells Hibernate to make a table out of this class
+@Table(name = "producthistory")
 public class ProductHistory {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
 
-    private int id;
-    private double percSil;
+    private Long id;
+    private Double percsil;
 
     private String product1;
 
     private String product2;
 
-    private String ingrCommon;
+    private String ingr_common;
 
     private String p1ingr;
 
     private String p2ingr;
 
 
-    public ProductHistory(int id, double percSil, String product1, String product2, String ingrCommon, String p1ingr, String p2ingr ) {
+    public ProductHistory(Long id, Double percsil, String product1, String product2, String ingr_common,
+                          String p1ingr,
+                          String p2ingr ) {
         this.id = id;
-        this.percSil = percSil;
+        this.percsil = percsil;
         this.product1 = product1;
         this.product2 = product2;
-        this.ingrCommon = ingrCommon;
+        this.ingr_common = ingr_common;
         this.p1ingr = p1ingr;
         this.p2ingr = p2ingr;
     }
@@ -39,8 +39,8 @@ public class ProductHistory {
     }
 
 
-    public double getPercSil() {
-        return percSil;
+    public Double getPercSil() {
+        return percsil;
     }
 
     public String getProduct1() {
@@ -54,7 +54,7 @@ public class ProductHistory {
 
 
     public String getIngrCommon() {
-        return ingrCommon;
+        return ingr_common;
     }
 
 
@@ -68,7 +68,7 @@ public class ProductHistory {
     }
 
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 

@@ -5,6 +5,7 @@ import com.example.ProductComparison.api.model.IngredientsResponse;
 import com.example.ProductComparison.api.model.Products;
 import com.example.ProductComparison.database.ProductHistory;
 import com.example.ProductComparison.database.UserRepository;
+import com.example.ProductComparison.service.DataProcessingService;
 import com.example.ProductComparison.service.InputService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,10 +25,9 @@ public class IngredientController {
     private InputService inputService;
     private DataProcessingService dataProcessingService;
 
-    @Autowired
     private UserRepository userRepository;
 
-    private int idCounter = 1;
+    private Long idCounter = 1L;
 
     public IngredientController(InputService inputService, DataProcessingService dataProcessingService, UserRepository userRepository) {
         this.inputService = inputService;
@@ -50,22 +50,24 @@ public class IngredientController {
             throw new RuntimeException("product 2 is empty");
         }
 
-//        List<String> list1 = retrieveIngr(products.getProduct_one());
-//        List<String> list2 = retrieveIngr(products.getProduct_two());
-//        ingredientsResponse.setPercSil(dataProcessingService.calculateJaccardSimilarity(list1, list2));
-//        List<String> common = dataProcessingService.getIngredientsInCommon(list1, list2);
-//
-//
-//        ingredientsResponse.setIngr_common(common);
-//        list1.removeAll(common);
-//        ingredientsResponse.setProduct_one_ingr(list1);
-//        list2.removeAll(common);
-//        ingredientsResponse.setProduct_two_ingr(list2);
+        List<String> list1 = retrieveIngr(products.getProduct_one());
+        List<String> list2 = retrieveIngr(products.getProduct_two());
+        ingredientsResponse.setPercSil(dataProcessingService.calculateJaccardSimilarity(list1, list2));
+        List<String> common = dataProcessingService.getIngredientsInCommon(list1, list2);
+
+
+        ingredientsResponse.setIngr_common(common);
+        list1.removeAll(common);
+        ingredientsResponse.setProduct_one_ingr(list1);
+        list2.removeAll(common);
+        ingredientsResponse.setProduct_two_ingr(list2);
 
         try {
-//            ProductHistory productHistory = new ProductHistory(idCounter++, ingredientsResponse.getPercSil(), products.getProduct_one(), products.getProduct_two(), String.join(",", common), String.join(",", list1), String.join(",", list2));
-            ProductHistory productHistory = new ProductHistory(1, 50, "vanilla",
-                    "chocolate", "flour", "extract", "choco");
+            ProductHistory productHistory = new ProductHistory(idCounter++, ingredientsResponse.getPercSil(),
+                    products.getProduct_one(), products.getProduct_two(), String.join(",", common),
+                    String.join(",", list1), String.join(",", list2));
+            //ProductHistory productHistory = new ProductHistory(Long.valueOf(1), Double.valueOf(50.0), "vanilla",
+//                    "chocolate", "flour", "extract", "choco");
             userRepository.save(productHistory);
 
             return ResponseEntity.ok(ingredientsResponse);
